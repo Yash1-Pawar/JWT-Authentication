@@ -30,4 +30,10 @@ public class UserEntity {
 
 	private String roles;
 
+	public UserEntity(String username, String password, String roles) {
+		this.userName = username;
+		this.roles = roles;
+		this.userPassword = password;
+	}
+
 }
