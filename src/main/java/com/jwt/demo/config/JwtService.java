@@ -36,7 +36,7 @@ public class JwtService {
 					.setClaims(extraClaims)
 					.setSubject(userDetails.getUsername())
 					.setIssuedAt(new Date(System.currentTimeMillis()))
-					.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+					.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
 					.signWith(getSignInKey(), SignatureAlgorithm.HS256)
 					.compact();
 	}
@@ -61,5 +61,10 @@ public class JwtService {
 	private Key getSignInKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
 		return Keys.hmacShaKeyFor(keyBytes);
+	}
+	
+//	Custom method to get token expiry
+	public String getTokenExpiration(String token) {
+		return extractExpiration(token).toString();
 	}
 }

@@ -11,17 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.jwt.demo.service.CustomUserService;
+import com.jwt.demo.service.CustomUserDetailService;
 
 @Configuration
 public class ApplicationConfig {
 
 	@Autowired
-	private CustomUserService customUserService;
+	private CustomUserDetailService customUserDetailService;
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return (userName) -> customUserService.loadUserByUsername(userName);
+		return (userName) -> customUserDetailService.loadUserByUsername(userName);
 	}
 
 	@Bean

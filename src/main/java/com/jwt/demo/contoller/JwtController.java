@@ -1,6 +1,7 @@
 package com.jwt.demo.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import com.jwt.demo.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/everyone")
+@RequestMapping("/jwt")
 @RequiredArgsConstructor
 public class JwtController {
 
@@ -24,20 +25,28 @@ public class JwtController {
 
 	@GetMapping("/hello")
 	public ResponseEntity<String> sayHello() {
+		System.out.println("Hello from unsecured endpoint");
 		return ResponseEntity.ok("Hello from unsecured endpoint");
 	}
 
-	@PostMapping("/register")
+	@PostMapping("/registerUser")
 	public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDTO userDTO) {
-		return ResponseEntity.ok(authenticationService.register(userDTO));
+		System.out.println("Registering User: "+ userDTO);
+		try {
+			AuthenticationResponse authenticationResponse= authenticationService.register(userDTO);
+			return ResponseEntity.ok(authenticationResponse);
+		} catch (Exception e) {
+			return new ResponseEntity<AuthenticationResponse>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody UserDTO userDTO) {
+	@PostMapping("/getToken")
+	public ResponseEntity<AuthenticationResponse> getToken(@RequestBody UserDTO userDTO) {
 		try {
-			return ResponseEntity.ok(authenticationService.authenticate(userDTO));
+			AuthenticationResponse authenticationResponse= authenticationService.authenticate(userDTO);
+			return ResponseEntity.ok(authenticationResponse);
 		} catch (Exception e) {
-			return ResponseEntity.ok(null);
+			return new ResponseEntity<AuthenticationResponse>(HttpStatus.BAD_REQUEST);
 		}
 	}
 

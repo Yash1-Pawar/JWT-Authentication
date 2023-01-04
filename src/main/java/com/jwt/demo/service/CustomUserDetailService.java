@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.jwt.demo.model.UserDTO;
 
 @Component
-public class CustomUserService implements UserDetailsService {
+public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
 	private UserService userService;

@@ -30,9 +30,10 @@ public class UserService {
 			return false;
 	}
 
-	public void saveUser(UserDTO userDTO) {
+	public boolean saveUser(UserDTO userDTO) {
 		if (this.existsByUsername(userDTO.getUsername())) {
 			System.out.println("User already exists with given username");
+			return false;
 		} else {
 			UserEntity userEntity = UserEntity.builder().userName(userDTO.getUsername())
 						.userPassword(userDTO.getPassword())
@@ -40,6 +41,7 @@ public class UserService {
 						.build();
 			userRepository.save(userEntity);
 			System.out.println("User Added Successfully");
+			return true;
 		}
 	}
 
