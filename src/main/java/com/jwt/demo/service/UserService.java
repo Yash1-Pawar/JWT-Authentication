@@ -18,7 +18,8 @@ public class UserService {
 	public UserDTO getUserByName(String name) throws Exception {
 		Optional<UserEntity> userOptional = userRepository.findByUserName(name);
 		UserEntity userEntity = userOptional.orElseThrow(() -> new Exception("User Not Found"));
-		UserDTO userDTO = new UserDTO(userEntity.getUserId(), userEntity.getUserName(), userEntity.getUserPassword());
+		UserDTO userDTO = new UserDTO(userEntity.getUserId(), userEntity.getUserName(), userEntity.getUserPassword(),
+				userEntity.getRoles());
 		return userDTO;
 	}
 
@@ -27,6 +28,19 @@ public class UserService {
 			return true;
 		else
 			return false;
+	}
+
+	public void saveUser(UserDTO userDTO) {
+		if (this.existsByUsername(userDTO.getUsername())) {
+			System.out.println("User already exists with given username");
+		} else {
+			UserEntity userEntity = UserEntity.builder().userName(userDTO.getUsername())
+						.userPassword(userDTO.getPassword())
+						.roles(userDTO.getRoles())
+						.build();
+			userRepository.save(userEntity);
+			System.out.println("User Added Successfully");
+		}
 	}
 
 }
