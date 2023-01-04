@@ -1,6 +1,5 @@
 # JWT-Authentication
 
-refered from https://www.bezkoder.com/spring-boot-jwt-authentication/
-
-youtube video explaination in hindi
-https://www.youtube.com/watch?v=P_29bHsVjjg
+refered from:
+1) https://www.youtube.com/watch?v=KxqlJblhzfI
+2) https://www.youtube.com/watch?v=P_29bHsVjjg
