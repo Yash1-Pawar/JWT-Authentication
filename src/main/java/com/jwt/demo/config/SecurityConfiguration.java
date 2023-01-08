@@ -1,10 +1,10 @@
 package com.jwt.demo.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
   private final JwtAuthenticationFilter jwtAuthFilter;
@@ -26,6 +27,8 @@ public class SecurityConfiguration {
         .disable()
         .authorizeHttpRequests()
         .requestMatchers("/jwt/**").permitAll()
+        .requestMatchers("/secured/helloAdmin").hasRole("admin")
+        .requestMatchers("/secured/helloUser").hasAnyRole("admin", "user")
         .anyRequest().authenticated()
         .and()
         .sessionManagement()
