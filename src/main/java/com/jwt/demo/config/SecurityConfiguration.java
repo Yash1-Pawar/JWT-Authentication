@@ -11,6 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.jwt.demo.service.Roles;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -27,8 +29,8 @@ public class SecurityConfiguration {
         .disable()
         .authorizeHttpRequests()
         .requestMatchers("/jwt/**").permitAll()
-        .requestMatchers("/secured/helloAdmin").hasRole("admin")
-        .requestMatchers("/secured/helloUser").hasAnyRole("admin", "user")
+        .requestMatchers("/secured/helloAdmin").hasRole(Roles.ADMIN.toString())
+        .requestMatchers("/secured/helloUser").hasAnyRole(Roles.USER.toString(), Roles.ADMIN.toString())
         .anyRequest().authenticated()
         .and()
         .sessionManagement()

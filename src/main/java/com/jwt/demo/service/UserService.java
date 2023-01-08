@@ -3,6 +3,7 @@ package com.jwt.demo.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jwt.demo.entity.UserEntity;
@@ -14,6 +15,7 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 
 	public UserDTO getUserByName(String name) throws Exception {
 		Optional<UserEntity> userOptional = userRepository.findByUserName(name);

@@ -23,13 +23,14 @@ public class AuthenticationService {
 	private final AuthenticationManager authenticationManager;
 
 	public AuthenticationResponse register(UserDTO userDTO) throws Exception {
-		userDTO.setRoles("USER");
+		userDTO.setRoles(Roles.USER.toString());
+		userDTO.setUserPassword(passwordEncoder.encode(userDTO.getPassword()));
 		if(!userService.saveUser(userDTO)) {
 			throw new Exception("User already exists");
 		}
 		var user = User.builder().username(userDTO.getUsername())
 						.password(passwordEncoder.encode(userDTO.getPassword()))
-						.roles("USER")
+						.roles(Roles.USER.toString())
 						.build();
 		var jwtToken = jwtService.generateToken(user);
 		return AuthenticationResponse.builder().token(jwtToken).tokenExpiration(jwtService.getTokenExpiration(jwtToken)).build();

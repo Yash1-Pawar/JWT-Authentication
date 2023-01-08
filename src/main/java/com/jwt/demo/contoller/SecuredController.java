@@ -29,14 +29,14 @@ public class SecuredController {
 	}
 
 	@GetMapping("/helloPre")
-	@PreAuthorize("hasRole('ROLE_admin')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> sayHelloPre() {
 		System.out.println("Hello from secured endpoint");
 		return ResponseEntity.ok("Hello from Pre secured endpoint");
 	}
 
 	@GetMapping("/helloAny")
-	@PreAuthorize("hasAnyRole('ROLE_admin','ROLE_user')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	public ResponseEntity<String> sayHelloAnyPre() {
 		System.out.println("Hello from secured endpoint");
 		return ResponseEntity.ok("Hello from Pre secured endpoint");
